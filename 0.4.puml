@@ -1,0 +1,31 @@
+@startuml "0.4-new-note"
+actor User as user
+user -> browser: Enters\nhttps://studies.cs.helsinki.fi/exampleapp/notes\nin the address bar
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTTP 200\nHTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: HTTP 200\nmain.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: HTTP 200\nmain.js
+note over browser
+    browser starts executing js-code
+    that requests JSON data from server
+end note
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: HTTP 200\n[{ content: "HTML is easy", date: "2019-05-23" }, ...]
+note over browser
+    browser executes the event handler
+    that renders notes to display
+end note
+user -> browser: Types "New Note" in the form and clicks submit button
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note \nnote is encoded as form_data in the HTTP POST body
+server-->browser: HTTP 302\nLocation: /exampleapp/notes
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTTP 200\nHTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: HTTP 200\nmain.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: HTTP 200\nmain.js
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: HTTP 200\n[..., { content: "New Note", date: "2022-07-30" }]
+@enduml
