@@ -9,3 +9,7 @@ Diagrams are made with PlantUML, source and output image attached.
 ## Exercise 0.4
 
 ![Sequence diagram for exercise 0.4](0.4-new-note.png)
+
+## Exercise 0.5
+
+![Sequence diagram for exercise 0.5](0.5-single-page-app.png)

@@ -1,0 +1,20 @@
+@startuml "0.5-single-page-app"
+actor User as user
+user -> browser: Enters\nhttps://studies.cs.helsinki.fi/exampleapp/spa\nin the address bar
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTTP 200\nHTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: HTTP 200\nmain.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: HTTP 200\nspa.js
+note over browser
+    browser starts executing js-code
+    that requests JSON data from server
+end note
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: HTTP 200\n[{ content: "HTML is easy", date: "2019-05-23" }, ...]
+note over browser
+    browser executes the event handler
+    that renders notes to display
+end note
+@enduml
