@@ -1,0 +1,29 @@
+@startuml "0.6-single-page-app-new-note"
+actor User as user
+user -> browser: Enters\nhttps://studies.cs.helsinki.fi/exampleapp/spa\nin the address bar
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTTP 200\nHTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: HTTP 200\nmain.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: HTTP 200\nspa.js
+note over browser
+    browser starts executing js-code
+    that requests JSON data from server
+end note
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: HTTP 200\n[{ content: "HTML is easy", date: "2019-05-23" }, ...]
+note over browser
+    browser executes the event handler
+    that renders notes to display
+end note
+user -> browser: Types "New Note" in the form and clicks submit button
+note over browser
+    browser executes the onsubmit callback
+    that adds the note to the notes in notes collection,
+    resets the form, rerenders the notes to display
+    and sends the notes to the server via XMLHttpRequest
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa\n{"content":"New Note","date":"2022-07-30T19:40:59.650Z"}
+server-->browser: HTTP 201\n{"message":"note created"}
+@enduml
